@@ -49,4 +49,8 @@ public interface VoteMapper {
             "locationAddress=#{locationAddress} and " +
             "voteStartTime=#{voteStartTime}")
     public int updateVotes(int groupNumber, String locationName, String locationAddress, String voteStartTime);
+
+    @Select("SELECT numberOfVotes from vote where groupNumber=#{groupNumber} and voteStartTime=#{voteStartTime} and locationName=#{locationName}")
+    public int findNumberOfNotesOneGroupOneTime(int groupNumber,String voteStartTime,String locationName);
+
 }

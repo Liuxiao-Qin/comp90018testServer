@@ -1,5 +1,6 @@
 package com.vote.controller;
 
+import com.peopleVote.Mapper.PeopleVoteMapper;
 import com.responseResult.ResponseResult;
 import com.vote.Mapper.VoteMapper;
 import com.vote.domain.Vote;
@@ -16,6 +17,9 @@ public class voteController {
     @Autowired
     private VoteMapper voteMapper;
 
+    @Autowired
+    private PeopleVoteMapper peopleVoteMapper;
+
     @PostMapping("/startVoting")
     @ResponseBody
     public ResponseResult startVoting(@RequestBody Vote[] params){
@@ -27,6 +31,7 @@ public class voteController {
                 int result = voteMapper.insertOne(vote.getGroupNumber(),vote.getActivityName(),vote.getLocationName(),vote.getLocationAddress(),vote.getLocationTag(),vote.getComments(),vote.getPhotos(),vote.getLongitude(),vote.getLatitude(),vote.getVoteStartTime(),vote.getVoteOverTime(),vote.getNumberOfVotes());
                 if(result!=0){
                     System.out.println("插入成功！");
+
                 }else{
                     flag=false;
                 }
@@ -43,17 +48,29 @@ public class voteController {
 
     @PostMapping("/votePlus")
     @ResponseBody
-    public ResponseResult targetPlace(@RequestBody Vote vote){
+    public ResponseResult targetPlace(@RequestBody Map params){
+        int groupNumber = Integer.parseInt(params.get("groupNumber").toString());
+        String locationName = params.get("locationName").toString();
+        String locationAddress = params.get("locationAddress").toString();
+        String voteStartTime = params.get("voteStartTime").toString();
+
         boolean flag = true;
         ResponseResult responseResult = null;
-        System.out.println(vote);
-        Vote check = voteMapper.checkIfCanInsert(vote.getGroupNumber(),vote.getLocationName(),vote.getLocationAddress(),vote.getVoteStartTime());
+
+        Vote check = voteMapper.checkIfCanInsert(groupNumber,locationName,locationAddress,voteStartTime);
         //说明有这条记录，加一就行了
         System.out.println(check);
         if(check!=null){
-            int result = voteMapper.updateVotes(vote.getGroupNumber(),vote.getLocationName(),vote.getLocationAddress(),vote.getVoteStartTime());
+            int result = voteMapper.updateVotes(groupNumber,locationName,locationAddress,voteStartTime);
             if(result!=0){
                 System.out.println("插入成功");
+                String username = params.get("username").toString();
+                int count = peopleVoteMapper.insertOne(groupNumber,username,locationName,voteStartTime);
+                if(count!=0){
+                    System.out.println("人投票成功");
+                }else{
+                    System.out.println("人没投票成功");
+                }
             }else{
                 flag=false;
             }
@@ -97,6 +114,17 @@ public class voteController {
         String voteStartTime = params.get("voteStartTime").toString();
         Vote vote =voteMapper.lastWinningLocation(groupNumber,voteStartTime);
         ResponseResult responseResult = new ResponseResult(0,"last vote result is here!",vote.getLocationName());
+        return responseResult;
+    }
+
+    @PostMapping("/findNumberOfNotesOneGroupOneTime")
+    @ResponseBody
+    public ResponseResult voteGetLocationVote(@RequestBody Map params){
+        int groupNumber = Integer.parseInt(params.get("groupNumber").toString());
+        String voteStartTime = params.get("voteStartTime").toString();
+        String locationName = params.get("locationName").toString();
+        int number = voteMapper.findNumberOfNotesOneGroupOneTime(groupNumber,voteStartTime,locationName);
+        ResponseResult responseResult = new ResponseResult(0,"get the number of votes of "+locationName+" successfully",number);
         return responseResult;
     }
 }

@@ -10,8 +10,6 @@ import java.util.List;
 @Mapper
 //@Repository
 public interface UserMapper {
-    @Select("select * from user")
-    public List<User> findAll();
 
     @Select("select * from user where username=#{username} and password=#{password}")
     public User findOne(String username,String password);

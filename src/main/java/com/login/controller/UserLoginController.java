@@ -33,8 +33,8 @@ public class UserLoginController {
     @Autowired
     public VoteMapper voteMapper;
 
-   @GetMapping("/login")
-   public String loginGet() throws IOException {
+    @GetMapping("/login")
+    public String loginGet() throws IOException {
 //        String username= request.getParameter("username");
 //        String password = request.getParameter("password");
 //        User user = userMapper.findOne(username,password);
@@ -45,9 +45,9 @@ public class UserLoginController {
 //        }else{
 //            responseResult = new ResponseResult(1,"login failed",null);
 //            return responseResult;
-       return "123456789";
-
-   }
+//        }
+        return "123456";
+    }
 
     @PostMapping("/login")
     @ResponseBody

@@ -13,13 +13,8 @@ public interface AllGroupMapper {
     @Select("SELECT groupNumber from allGroup order by createTime desc;")
     public List<Integer> findLatestAddedGroupNumber();
 
-    @Select("SELECT groupManager from allGroup where groupNumber=#{groupNumber}")
-    public String findGroupManager(int groupNumber);
-
     @Select("SELECT * FROM allGroup where groupManager=#{groupManager} order by createTime desc limit 0,1")
     public Group findLatestCreatedGroup(String groupManager);
-
-//    @Select("SELECT * FROM allGroup order by createTime desc limit 0,1")
 
     @Select("SELECT groupName from allGroup where groupNumber=#{groupNumber}")
     public String findGroupName(int groupNumber);
@@ -35,10 +30,5 @@ public interface AllGroupMapper {
 
     @Update("update allGroup set groupPin=#{groupPin} where groupNumber=#{groupNumber}")
     public int updateGroupPin(int groupNumber,int groupPin);
-//
-//    @Select("select * from user where username=#{username}")
-//    public User findOneByName(String username);
-//
-//    @Insert("insert into user values(#{username},#{nickname},#{password})")
-//    public int insertOne(String username,String nickname,String password);
+
 }
