@@ -2,5 +2,5 @@ spring:
   datasource:
     url: springbootdatabase.mysql.database.azure.com:3306/stu
     username: MichaelZhang
-    password: !ZHANGyuan0099
+    password: "!ZHANGyuan0099"
     driver-class-name: com.mysql.cj.jdbc.Driver
