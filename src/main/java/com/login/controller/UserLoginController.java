@@ -34,7 +34,7 @@ public class UserLoginController {
     public VoteMapper voteMapper;
 
    @GetMapping("/login")
-   public String loginGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+   public String loginGet() throws IOException {
 //        String username= request.getParameter("username");
 //        String password = request.getParameter("password");
 //        User user = userMapper.findOne(username,password);
