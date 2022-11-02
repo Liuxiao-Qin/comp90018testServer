@@ -153,4 +153,20 @@ public class voteController {
         return responseResult;
     }
 
+    @PostMapping("/getLastWinningLocation")
+    @ResponseBody
+    public ResponseResult getLastWinningLocation(@RequestBody Map params){
+        int groupNumber = Integer.parseInt(params.get("groupNumber").toString());
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String currentTime = sdf.format(date);
+        Vote vote = voteMapper.findPreviousVote(currentTime,groupNumber);
+        ResponseResult responseResult;
+        if(vote==null){
+            responseResult = new ResponseResult(1,"do not have the previous vote result!",null);
+        }else{
+            responseResult = new ResponseResult(0,"get the previous vote result!",vote.getLocationName());
+        }
+        return responseResult;
+    }
 }
