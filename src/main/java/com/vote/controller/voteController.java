@@ -139,7 +139,7 @@ public class voteController {
         Vote vote = voteMapper.getActivityNameAndTime(groupNumber,currentTime);
         ResponseResult responseResult;
         if(vote==null){
-            responseResult = new ResponseResult(0,"The current group has no vote","null");
+            responseResult = new ResponseResult(0,"The current group has no vote",null);
         }else{
             String activityName = vote.getActivityName();
             String voteStartTime = vote.getVoteStartTime();
