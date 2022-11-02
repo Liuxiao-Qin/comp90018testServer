@@ -5,6 +5,7 @@ import com.group.domain.Group;
 import com.login.Mapper.UserMapper;
 import com.login.domain.User;
 import com.responseResult.ResponseResult;
+import com.utils.EncryptUtil;
 import com.utils.Utils;
 import com.vote.Mapper.VoteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,9 @@ public class UserLoginController {
     public ResponseResult loginPost(@RequestBody Map params) throws IOException{
         String username =  params.get("username").toString();
         String password =  params.get("password").toString();
-        User user = userMapper.findOne(username,password);
+        String encryptPassword = EncryptUtil.encrypt(password);
+        User user = userMapper.findOne(username,encryptPassword);
+//        user.setPassword(EncryptUtil.decrypt(encryptPassword));
         ResponseResult responseResult = null;
         if(user!=null){
             String nickname = user.getNickname();
@@ -124,12 +127,14 @@ public class UserLoginController {
     public ResponseResult changePassword(@RequestBody Map params){
         String username = params.get("username").toString();
         String currentPassword = params.get("currentPassword").toString();
+        String encryptCurrentPassword = EncryptUtil.encrypt(currentPassword);
         String newPassword = params.get("newPassword").toString();
-        User user = userMapper.findOne(username,currentPassword);
+        String encryptNewPassword = EncryptUtil.encrypt(newPassword);
+        User user = userMapper.findOne(username,encryptCurrentPassword);
         ResponseResult responseResult= null;
         //如果这个用户输入的正确
         if(user!= null){
-            int result = userMapper.changePassword(username,newPassword);
+            int result = userMapper.changePassword(username,encryptNewPassword);
             if(result!=0){
                 responseResult = new ResponseResult(0,"change password successfully",0);
 

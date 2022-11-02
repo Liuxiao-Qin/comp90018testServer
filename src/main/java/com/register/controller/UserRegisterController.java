@@ -3,6 +3,7 @@ package com.register.controller;
 import com.login.Mapper.UserMapper;
 import com.login.domain.User;
 import com.responseResult.ResponseResult;
+import com.utils.EncryptUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -29,9 +30,12 @@ public class UserRegisterController {
             return responseResult;
         }else{
             String password = params.get("password").toString();
+            String encryptPassword = EncryptUtil.encrypt(password);
+//            String decrypt = EncryptUtil.decrypt(encryptPassword);
+//            System.out.println(decrypt);
             String nickname = params.get("nickname").toString();
-            int count = userMapper.insertOne(username,nickname,password);
-            User newRegister = new User(username,nickname,password);
+            int count = userMapper.insertOne(username,nickname,encryptPassword);
+            User newRegister = new User(username,nickname,EncryptUtil.decrypt(encryptPassword));
             if(count!=0){
                 responseResult = new ResponseResult(0,"register successfully!",newRegister);
                 return responseResult;
