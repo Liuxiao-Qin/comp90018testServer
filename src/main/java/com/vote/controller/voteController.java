@@ -23,6 +23,7 @@ public class voteController {
     @PostMapping("/startVoting")
     @ResponseBody
     public ResponseResult startVoting(@RequestBody Vote[] params){
+        System.out.println(params);
         boolean flag = true;
         ResponseResult responseResult = null;
         for(Vote vote:params){
@@ -163,7 +164,7 @@ public class voteController {
         Vote vote = voteMapper.findPreviousVote(currentTime,groupNumber);
         ResponseResult responseResult;
         if(vote==null){
-            responseResult = new ResponseResult(1,"do not have the previous vote result!",null);
+            responseResult = new ResponseResult(0,"do not have the previous vote result!",null);
         }else{
             responseResult = new ResponseResult(0,"get the previous vote result!",vote.getLocationName());
         }
