@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/vote")
@@ -147,11 +144,11 @@ public class voteController {
             String activityName = vote.getActivityName();
             String voteStartTime = vote.getVoteStartTime();
             String voteOverTime = vote.getVoteOverTime();
-            ArrayList arrayList  = new ArrayList();
-            arrayList.add(activityName);
-            arrayList.add(voteStartTime);
-            arrayList.add(voteOverTime);
-            responseResult = new ResponseResult(0,"The current group has one vote",arrayList);
+            HashMap hashMap  = new HashMap();
+            hashMap.put("activityName",activityName);
+            hashMap.put("voteStartTime",voteStartTime);
+            hashMap.put("voteOverTime",voteOverTime);
+            responseResult = new ResponseResult(0,"The current group has one vote",hashMap);
         }
         return responseResult;
     }

@@ -31,4 +31,7 @@ public interface AllGroupMapper {
     @Update("update allGroup set groupPin=#{groupPin} where groupNumber=#{groupNumber}")
     public int updateGroupPin(int groupNumber,int groupPin);
 
+    @Select("SELECT groupManager from allGroup where groupNumber=#{groupNumber}")
+    public String getGroupManager(int groupNumber);
+
 }

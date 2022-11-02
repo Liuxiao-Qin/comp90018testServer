@@ -88,7 +88,7 @@ public class Utils {
             else{
                 previousLocationName = previousVote.getLocationName();
                 hashMap = new HashMap();
-                hashMap.put("ifManager",true);
+                hashMap.put("ifManager",false);
                 hashMap.put("currentActivityName","None");
                 hashMap.put("groupName",groupName);
                 hashMap.put("previousLocationName",previousLocationName);
@@ -105,7 +105,7 @@ public class Utils {
             activityName = vote.getActivityName();
             String voteOverTime = vote.getVoteOverTime();
             hashMap = new HashMap();
-            hashMap.put("ifManager",true);
+            hashMap.put("ifManager",false);
             hashMap.put("currentActivityName",activityName);
             hashMap.put("voteOverTime",voteOverTime);
             hashMap.put("groupName",groupName);

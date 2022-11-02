@@ -175,9 +175,16 @@ public class GroupController {
         ResponseResult responseResult = null;
         for(int groupNumber:groupNumberList){
             String groupName = allGroupMapper.findGroupName(groupNumber);
+            String groupManager = allGroupMapper.getGroupManager(groupNumber);
+
             HashMap hashMap = new HashMap();
             hashMap.put("groupNumber",groupNumber);
             hashMap.put("groupName",groupName);
+            if(groupManager.equals(groupMember)){
+                hashMap.put("ifManager",true);
+            }else{
+                hashMap.put("ifManager",false);
+            }
             finalList.add(hashMap);
         }
         responseResult = new ResponseResult(0,"get all group name and ID successfully!",finalList);
