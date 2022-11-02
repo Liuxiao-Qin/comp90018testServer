@@ -7,6 +7,9 @@ import com.vote.domain.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +34,6 @@ public class voteController {
                 int result = voteMapper.insertOne(vote.getGroupNumber(),vote.getActivityName(),vote.getLocationName(),vote.getLocationAddress(),vote.getLocationTag(),vote.getComments(),vote.getPhotos(),vote.getLongitude(),vote.getLatitude(),vote.getVoteStartTime(),vote.getVoteOverTime(),vote.getNumberOfVotes());
                 if(result!=0){
                     System.out.println("插入成功！");
-
                 }else{
                     flag=false;
                 }
@@ -127,4 +129,31 @@ public class voteController {
         ResponseResult responseResult = new ResponseResult(0,"get the number of votes of "+locationName+" successfully",number);
         return responseResult;
     }
+
+    @PostMapping("/returnActivityNameAndTime")
+    @ResponseBody
+    public ResponseResult returnActivityNameAndTime(@RequestBody Map params){
+        int groupNumber = Integer.parseInt(params.get("groupNumber").toString());
+        SimpleDateFormat sdateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//这里传入字符串格式后将按照此格式进行格式化，字符串中y、M、H、m、s分别是时间英文首字母，是不能变的，其他字符可以改变。
+        // 4-2:创建一个Date时间对象：
+        Date dateformatnew = new Date();//创建 Date对象并将它传入format方法：
+        // 4-3：使用format(Date date)对日期进行格式化,需要传入一个Date时间对象：
+        String currentTime = sdateformat.format(dateformatnew);
+        Vote vote = voteMapper.getActivityNameAndTime(groupNumber,currentTime);
+        ResponseResult responseResult;
+        if(vote==null){
+            responseResult = new ResponseResult(0,"The current group has no vote","null");
+        }else{
+            String activityName = vote.getActivityName();
+            String voteStartTime = vote.getVoteStartTime();
+            String voteOverTime = vote.getVoteOverTime();
+            ArrayList arrayList  = new ArrayList();
+            arrayList.add(activityName);
+            arrayList.add(voteStartTime);
+            arrayList.add(voteOverTime);
+            responseResult = new ResponseResult(0,"The current group has one vote",arrayList);
+        }
+        return responseResult;
+    }
+
 }

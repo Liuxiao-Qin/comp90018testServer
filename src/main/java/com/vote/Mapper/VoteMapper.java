@@ -53,4 +53,6 @@ public interface VoteMapper {
     @Select("SELECT numberOfVotes from vote where groupNumber=#{groupNumber} and voteStartTime=#{voteStartTime} and locationName=#{locationName}")
     public int findNumberOfNotesOneGroupOneTime(int groupNumber,String voteStartTime,String locationName);
 
+    @Select("SELECT activityName,voteStartTime,voteOverTime from vote where groupNumber=#{groupNumber} and voteStartTime<#{currentTime} and #{currentTime}<voteOverTime limit 0,1 ")
+    public Vote getActivityNameAndTime(int groupNumber,String currentTime);
 }

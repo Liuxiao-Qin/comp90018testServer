@@ -4,3 +4,7 @@ spring:
     username: MichaelZhang
     password: "!ZHANGyuan0099"
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/stu
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
