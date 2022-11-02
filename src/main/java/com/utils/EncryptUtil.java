@@ -10,14 +10,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-/**
- * 加密工具类
- *
- * md5加密出来的长度是32位
- *
- * sha加密出来的长度是40位
- *
- */
 public final class EncryptUtil {
 
     private static final String PASSWORD_CRYPT_KEY = "kdsriwosnjnrffodscjk5654ds";
@@ -89,6 +81,11 @@ public final class EncryptUtil {
         }
         return hs.toUpperCase();
     }
+
+//    public static void main(String[] args) {
+//        String en = EncryptUtil.encrypt("123456");
+//        System.out.println(en);
+//    }
 
 }
 

@@ -130,7 +130,6 @@ public class GroupController {
             responseResult = new ResponseResult(1,"failed to kick him out!",0);
         }
         return responseResult;
-
     }
 
     @PostMapping("/selfLeaving")
