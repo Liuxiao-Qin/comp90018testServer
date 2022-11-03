@@ -8,7 +8,7 @@ public interface LocationMapper {
     @Select("select * from locationList where groupNumber=#{groupNumber} and locationName=#{locationName} and locationAddress=#{locationAddress}")
     public LocationList findLocation(int groupNumber, String locationName, String locationAddress);
 
-    @Insert("insert into locationList values(#{groupNumber},#{locationName},#{locationAddress},#{username},#{locationTag},#{comments},#{photos})")
+    @Insert("insert into locationList values(#{groupNumber},#{locationName},#{locationAddress},#{username},#{locationTag},#{comments},#{photos},#{longitude}, #{latitude})")
     public int insertLocation(int groupNumber,String locationName, String locationAddress, String username, String locationTag, String comments, String photos, String longitude, String latitude);
 
     @Update("update locationList set comments=#{comments} where groupNumber=#{groupNumber} and locationName=#{locationName} and locationAddress=#{locationAddress}")
