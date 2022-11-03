@@ -126,7 +126,7 @@ public class LocationListController {
 
         if (locationNumber != 0){
             for(int i = 0; i < locationNumber; i++){
-                LocationList oneLocation = locationMapper.findOneLocation(groupNumber, i,i+1);
+                LocationList oneLocation = locationMapper.findOneLocation(groupNumber, i,1);
                 String locationName = oneLocation.getLocationName();
                 String locationAddress = oneLocation.getLocationAddress();
                 String username = oneLocation.getUsername();
