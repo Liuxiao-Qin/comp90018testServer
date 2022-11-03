@@ -26,9 +26,9 @@ public class PeopleVoteController {
         ResponseResult responseResult=null;
         //如果为空表示还没投票
         if(peopleVote==null){
-            responseResult = new ResponseResult(0,"this user has not voted to this location!","false");
+            responseResult = new ResponseResult(0,"this user has not voted to this location!",false);
         }else{
-            responseResult = new ResponseResult(0,"this user has already voted to this location!","true");
+            responseResult = new ResponseResult(0,"this user has already voted to this location!",true);
         }
         return  responseResult;
     }
