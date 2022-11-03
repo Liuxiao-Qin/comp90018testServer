@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -79,8 +76,10 @@ public class UserLoginController {
                 if(group!=null){
                     String groupName = group.getGroupName();
                     int groupNumber = group.getGroupNumber();
+                    TimeZone tz = TimeZone.getTimeZone("UTC");
                     Date date = new Date();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    sdf.setTimeZone(tz);
                     String currentTime = sdf.format(date);
                     responseResult =Utils.managerLoginLogics(username,nickname,voteMapper,groupName,groupNumber,currentTime);
                     System.out.println(responseResult);
@@ -109,8 +108,10 @@ public class UserLoginController {
                     }
                     //找到了对应的groupNumber
                     String groupName = allGroupMapper.findGroupName(groupNumber);
+                    TimeZone tz = TimeZone.getTimeZone("UTC");
                     Date date = new Date();
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    sdf.setTimeZone(tz);
                     String currentTime = sdf.format(date);
                     responseResult = Utils.memberLoginLogics(username,nickname,voteMapper,groupName,groupNumber,currentTime);
                 }

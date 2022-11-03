@@ -132,11 +132,15 @@ public class voteController {
     @ResponseBody
     public ResponseResult returnActivityNameAndTime(@RequestBody Map params){
         int groupNumber = Integer.parseInt(params.get("groupNumber").toString());
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+
         SimpleDateFormat sdateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//这里传入字符串格式后将按照此格式进行格式化，字符串中y、M、H、m、s分别是时间英文首字母，是不能变的，其他字符可以改变。
+        sdateformat.setTimeZone(tz);
         // 4-2:创建一个Date时间对象：
         Date dateformatnew = new Date();//创建 Date对象并将它传入format方法：
         // 4-3：使用format(Date date)对日期进行格式化,需要传入一个Date时间对象：
         String currentTime = sdateformat.format(dateformatnew);
+        System.out.println(currentTime);
         Vote vote = voteMapper.getActivityNameAndTime(groupNumber,currentTime);
         ResponseResult responseResult;
         if(vote==null){
@@ -159,7 +163,9 @@ public class voteController {
     public ResponseResult getLastWinningLocation(@RequestBody Map params){
         int groupNumber = Integer.parseInt(params.get("groupNumber").toString());
         Date date = new Date();
+        TimeZone tz = TimeZone.getTimeZone("UTC");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(tz);
         String currentTime = sdf.format(date);
         Vote vote = voteMapper.findPreviousVote(currentTime,groupNumber);
         ResponseResult responseResult;
